@@ -17,7 +17,9 @@
     "test:integration": "vitest run tests/integration"
   },
   "dependencies": {
+    "@prisma/client": "6.19.3",
     "next": "16.4.3",
+    "prisma": "6.19.3",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
@@ -35,6 +37,7 @@
     "prettier": "^3.9.10",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5",
     "vitest": "^5.0.5"
   },
@@ -46,5 +49,11 @@
     "*.{json,css,md}": [
       "prettier --write"
     ]
+  },
+  "allowScripts": {
+    "prisma@6.19.3": true,
+    "@prisma/client@6.19.3": true,
+    "@prisma/engines@6.19.3": true,
+    "unrs-resolver@1.12.2": true
   }
 }
