@@ -16,6 +16,7 @@ import { PrismaProjectRepository } from "./database/repositories/prismaProjectRe
 import { PrismaRefreshTokenRepository } from "./database/repositories/prismaRefreshTokenRepository";
 import { PrismaTaskRepository } from "./database/repositories/prismaTaskRepository";
 import { PrismaUserRepository } from "./database/repositories/prismaUserRepository";
+import { PostgresRateLimiter } from "./rate-limit/postgresRateLimiter";
 import { NoopRealtimePublisher } from "./realtime/noopRealtimePublisher";
 
 let dependencies: AppDependencies | null = null;
@@ -35,6 +36,7 @@ function createDependencies(): AppDependencies {
     activity: new PrismaActivityLogRepository(prisma),
     passwordHasher: new BcryptPasswordHasher(),
     tokens: new JoseTokenService(env.JWT_ACCESS_SECRET, env.JWT_REFRESH_SECRET),
+    rateLimiter: new PostgresRateLimiter(prisma),
     realtime: new NoopRealtimePublisher(),
   };
 }

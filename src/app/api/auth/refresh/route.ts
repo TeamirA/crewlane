@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
+import { AUTH_RATE_LIMITS } from "@/core/application/services/enforceRateLimit";
 import { refreshSession } from "@/core/application/use-cases/auth/refreshSession";
 import { AuthenticationError } from "@/core/domain/errors/domainErrors";
 import {
@@ -10,10 +11,12 @@ import {
 } from "@/infrastructure/auth/authCookies";
 import { getDependencies } from "@/infrastructure/container";
 import { createApiHandler, respondWithData } from "@/lib/api/apiHandler";
+import { rateLimitRequest } from "@/lib/api/rateLimitRequest";
 import { ROUTES } from "@/lib/constants";
 import { getSafeRedirectPath } from "@/lib/getSafeRedirectPath";
 
 async function rotateSessionFromCookie(request: NextRequest) {
+  await rateLimitRequest(request, AUTH_RATE_LIMITS.refresh);
   const refreshToken = request.cookies.get(REFRESH_TOKEN_COOKIE)?.value;
   if (!refreshToken) {
     throw new AuthenticationError("Session expired, please sign in again");
