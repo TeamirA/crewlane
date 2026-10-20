@@ -15,7 +15,12 @@ export async function refreshSession(
   const storedToken = await refreshTokens.findByTokenHash(
     tokens.hashRefreshToken(presentedRefreshToken),
   );
-  if (!storedToken || !isRefreshTokenUsable(storedToken)) {
+  if (!storedToken) {
+    throw new AuthenticationError("Session expired, please sign in again");
+  }
+  if (!isRefreshTokenUsable(storedToken)) {
+    // A revoked token being presented again signals theft, so end every session in its family.
+    await refreshTokens.revokeFamily(storedToken.familyId);
     throw new AuthenticationError("Session expired, please sign in again");
   }
   const user = await users.findById(storedToken.userId);
