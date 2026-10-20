@@ -9,7 +9,6 @@ import type { RefreshTokenRepository } from "../domain/repositories/refreshToken
 import type { TaskRepository } from "../domain/repositories/taskRepository";
 import type { UserRepository } from "../domain/repositories/userRepository";
 import type { PasswordHasher } from "../domain/services/passwordHasher";
-import type { RateLimiter } from "../domain/services/rateLimiter";
 import type { RealtimePublisher } from "../domain/services/realtimePublisher";
 import type { TokenService } from "../domain/services/tokenService";
 
@@ -26,6 +25,5 @@ export interface AppDependencies {
   activity: ActivityLogRepository;
   passwordHasher: PasswordHasher;
   tokens: TokenService;
-  rateLimiter: RateLimiter;
   realtime: RealtimePublisher;
 }
