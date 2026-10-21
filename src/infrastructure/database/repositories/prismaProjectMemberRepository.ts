@@ -49,7 +49,13 @@ export class PrismaProjectMemberRepository implements ProjectMemberRepository {
     });
   }
 
+  // Removing a member also unassigns them from every task in that project.
   async remove(memberId: string) {
-    await this.prisma.projectMember.delete({ where: { id: memberId } });
+    await this.prisma.$transaction(async (transaction) => {
+      const member = await transaction.projectMember.delete({ where: { id: memberId } });
+      await transaction.taskAssignee.deleteMany({
+        where: { userId: member.userId, task: { projectId: member.projectId } },
+      });
+    });
   }
 }
