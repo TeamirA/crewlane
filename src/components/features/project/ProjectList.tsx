@@ -1,25 +1,33 @@
 "use client";
 
+import { EmptyState, ErrorState, LoadingState } from "@/components/ui/StatusMessage";
 import { useProjects } from "@/hooks/useProjects";
 
 import { ProjectCard } from "./ProjectCard";
 
 export function ProjectList() {
-  const { data: projects, isPending, error } = useProjects();
+  const { data: projects, isPending, error, refetch } = useProjects();
   if (isPending) {
-    return <p className="text-neutral-500">Loading projects…</p>;
+    return <LoadingState label="Loading projects" />;
   }
   if (error) {
-    return <p role="alert">Could not load projects: {error.message}</p>;
+    return <ErrorState message={error.message} onRetry={() => refetch()} />;
   }
   if (projects.length === 0) {
-    return <p className="text-neutral-500">No projects yet. Create your first one.</p>;
+    return (
+      <EmptyState
+        title="No projects yet"
+        description="Create a project to start planning work with your team."
+      />
+    );
   }
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {projects.map((project) => (
-        <ProjectCard key={project.id} project={project} />
+        <li key={project.id}>
+          <ProjectCard project={project} />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
