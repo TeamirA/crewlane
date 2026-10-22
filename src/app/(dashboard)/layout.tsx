@@ -1,3 +1,5 @@
+import { AppShell } from "@/components/features/layout/AppShell";
+
 export default function DashboardLayout({ children }: LayoutProps<"/">) {
-  return <div className="flex flex-1 flex-col bg-neutral-50">{children}</div>;
+  return <AppShell>{children}</AppShell>;
 }
