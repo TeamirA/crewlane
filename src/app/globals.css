@@ -13,3 +13,11 @@ body {
   outline: 2px solid var(--color-indigo-500);
   outline-offset: 2px;
 }
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-neutral-200);
+  }
+}
