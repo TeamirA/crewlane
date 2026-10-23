@@ -1,8 +1,15 @@
-import { TaskCard } from "@/components/features/task/TaskCard";
+"use client";
+
+import { useDroppable } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+
+import { cn } from "@/lib/cn";
+import { toColumnDropId } from "@/lib/dragTargets";
 import type { ColumnDto, TaskDto } from "@/types/board";
 
 import { AddTaskForm } from "./AddTaskForm";
 import { ColumnHeader } from "./ColumnHeader";
+import { SortableTaskCard } from "./SortableTaskCard";
 
 interface BoardColumnProps {
   column: ColumnDto;
@@ -15,6 +22,7 @@ interface BoardColumnProps {
 
 export function BoardColumn(props: BoardColumnProps) {
   const { column, tasks, columnIndex, columnCount, canDeleteColumn, onOpenTask } = props;
+  const { setNodeRef, isOver } = useDroppable({ id: toColumnDropId(column.id) });
   return (
     <section
       aria-label={`${column.name} column`}
@@ -27,13 +35,19 @@ export function BoardColumn(props: BoardColumnProps) {
         columnCount={columnCount}
         canDelete={canDeleteColumn}
       />
-      <ul className="flex min-h-12 flex-col gap-2 overflow-y-auto">
-        {tasks.map((task) => (
-          <li key={task.id}>
-            <TaskCard task={task} onOpen={onOpenTask} />
-          </li>
-        ))}
-      </ul>
+      <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
+        <ul
+          ref={setNodeRef}
+          className={cn(
+            "flex min-h-16 flex-col gap-2 overflow-y-auto rounded-lg p-0.5",
+            isOver && "bg-indigo-50",
+          )}
+        >
+          {tasks.map((task) => (
+            <SortableTaskCard key={task.id} task={task} onOpen={onOpenTask} />
+          ))}
+        </ul>
+      </SortableContext>
       <AddTaskForm projectId={column.projectId} columnId={column.id} />
     </section>
   );
