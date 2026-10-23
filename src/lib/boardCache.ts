@@ -47,3 +47,15 @@ export function moveTaskInBoard(
     ) ?? (siblings[targetIndex - 1]?.position ?? 0) + 1e-9;
   return upsertTask(board, { ...task, columnId, position });
 }
+
+export function moveColumnInBoard(board: BoardDto, columnId: string, targetIndex: number) {
+  const column = board.columns.find((candidate) => candidate.id === columnId);
+  if (!column) return board;
+  const otherColumns = board.columns.filter((candidate) => candidate.id !== columnId);
+  const position =
+    calculatePositionAtIndex(
+      otherColumns.map((candidate) => candidate.position),
+      targetIndex,
+    ) ?? column.position;
+  return replaceColumns(board, [...otherColumns, { ...column, position }]);
+}

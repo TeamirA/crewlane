@@ -2,8 +2,11 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { moveColumnInBoard } from "@/lib/boardCache";
 import { apiRequest } from "@/lib/httpClient";
 import { queryKeys } from "@/lib/queryKeys";
+
+import { useBoardCacheUpdater } from "./useBoard";
 
 function useInvalidateBoard(projectId: string) {
   const queryClient = useQueryClient();
@@ -28,11 +31,15 @@ export function useRenameColumn(projectId: string) {
   });
 }
 
+// Columns are reordered in the cache immediately so they do not jump back while saving.
 export function useMoveColumn(projectId: string) {
   const onSettled = useInvalidateBoard(projectId);
+  const updateBoard = useBoardCacheUpdater(projectId);
   return useMutation({
     mutationFn: ({ columnId, targetIndex }: { columnId: string; targetIndex: number }) =>
       apiRequest(`/api/columns/${columnId}/move`, { method: "PATCH", body: { targetIndex } }),
+    onMutate: ({ columnId, targetIndex }) =>
+      updateBoard((board) => moveColumnInBoard(board, columnId, targetIndex)),
     onSettled,
   });
 }
