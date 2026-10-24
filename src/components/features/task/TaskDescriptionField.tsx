@@ -18,6 +18,7 @@ export function TaskDescriptionField({ description, isSaving, onSave }: TaskDesc
     <div className="flex flex-col gap-2">
       <Textarea
         label="Description"
+        isLabelHidden
         rows={5}
         placeholder="Add more detail about this task"
         value={draftDescription}
