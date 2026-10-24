@@ -5,7 +5,7 @@ import { closestCorners, DndContext, DragOverlay } from "@dnd-kit/core";
 import { TaskCard } from "@/components/features/task/TaskCard";
 import { useBoardDragAndDrop } from "@/hooks/useBoardDragAndDrop";
 import { getColumnTasks } from "@/lib/boardCache";
-import type { BoardDto } from "@/types/board";
+import type { BoardDto, TaskDto } from "@/types/board";
 import type { ProjectRoleDto } from "@/types/project";
 
 import { AddColumnForm } from "./AddColumnForm";
@@ -15,10 +15,12 @@ interface BoardProps {
   projectId: string;
   board: BoardDto;
   currentUserRole: ProjectRoleDto;
+  isTaskVisible: (task: TaskDto) => boolean;
   onOpenTask: (taskId: string) => void;
 }
 
-export function Board({ projectId, board, currentUserRole, onOpenTask }: BoardProps) {
+export function Board(props: BoardProps) {
+  const { projectId, board, currentUserRole, isTaskVisible, onOpenTask } = props;
   const { sensors, activeTask, handlers } = useBoardDragAndDrop(projectId, board);
   const canDeleteColumn = currentUserRole !== "MEMBER" && board.columns.length > 1;
   return (
@@ -28,7 +30,7 @@ export function Board({ projectId, board, currentUserRole, onOpenTask }: BoardPr
           <BoardColumn
             key={column.id}
             column={column}
-            tasks={getColumnTasks(board, column.id)}
+            tasks={getColumnTasks(board, column.id).filter(isTaskVisible)}
             columnIndex={columnIndex}
             columnCount={board.columns.length}
             canDeleteColumn={canDeleteColumn}
