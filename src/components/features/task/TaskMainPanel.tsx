@@ -5,6 +5,7 @@ import type { UpdateTaskInput } from "@/core/application/schemas/taskSchemas";
 import type { TaskDto } from "@/types/board";
 import type { UserSummaryDto } from "@/types/user";
 
+import { TaskActivityList } from "./TaskActivityList";
 import { TaskDescriptionField } from "./TaskDescriptionField";
 import { TaskDetailSection } from "./TaskDetailSection";
 import { TaskTitleField } from "./TaskTitleField";
@@ -37,6 +38,9 @@ export function TaskMainPanel(props: TaskMainPanelProps) {
       </TaskDetailSection>
       <TaskDetailSection title="Comments">
         <CommentThread projectId={task.projectId} taskId={task.id} members={members} />
+      </TaskDetailSection>
+      <TaskDetailSection title="Activity">
+        <TaskActivityList task={task} />
       </TaskDetailSection>
     </div>
   );
