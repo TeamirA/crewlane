@@ -8,6 +8,7 @@ import { TaskDetailModal } from "@/components/features/task/TaskDetailModal";
 import { ErrorState, LoadingState } from "@/components/ui/StatusMessage";
 import { useBoard } from "@/hooks/useBoard";
 import { useBoardFilters } from "@/hooks/useBoardFilters";
+import { useBoardRealtime } from "@/hooks/useBoardRealtime";
 import { useProjectDetails } from "@/hooks/useProjectDetails";
 import { doesTaskMatchFilters } from "@/lib/taskFilters";
 
@@ -18,6 +19,7 @@ export function ProjectWorkspace({ projectId }: { projectId: string }) {
   const boardQuery = useBoard(projectId);
   const [openTaskId, setOpenTaskId] = useState<string | null>(null);
   const { filters, updateFilter, clearFilters } = useBoardFilters();
+  useBoardRealtime(projectId);
   const error = projectQuery.error ?? boardQuery.error;
   if (error) {
     const retry = () => (projectQuery.refetch(), boardQuery.refetch());

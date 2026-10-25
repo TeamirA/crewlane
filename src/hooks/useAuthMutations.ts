@@ -7,6 +7,7 @@ import type { LoginInput, RegisterInput } from "@/core/application/schemas/authS
 import { ROUTES } from "@/lib/constants";
 import { apiRequest } from "@/lib/httpClient";
 import { queryKeys } from "@/lib/queryKeys";
+import { clearRealtimeSession } from "@/lib/supabaseBrowserClient";
 import type { UserDto } from "@/types/user";
 
 function useSignInSuccessHandler(redirectPath: string) {
@@ -43,6 +44,7 @@ export function useLogout() {
   return useMutation({
     mutationFn: () => apiRequest("/api/auth/logout", { method: "POST" }),
     onSettled: () => {
+      clearRealtimeSession();
       queryClient.clear();
       router.replace(ROUTES.login);
     },
