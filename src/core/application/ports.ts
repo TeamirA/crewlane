@@ -11,6 +11,7 @@ import type { UserRepository } from "../domain/repositories/userRepository";
 import type { PasswordHasher } from "../domain/services/passwordHasher";
 import type { RateLimiter } from "../domain/services/rateLimiter";
 import type { RealtimePublisher } from "../domain/services/realtimePublisher";
+import type { RealtimeTokenIssuer } from "../domain/services/realtimeTokenIssuer";
 import type { TokenService } from "../domain/services/tokenService";
 
 export interface AppDependencies {
@@ -28,4 +29,5 @@ export interface AppDependencies {
   tokens: TokenService;
   rateLimiter: RateLimiter;
   realtime: RealtimePublisher;
+  realtimeTokens: RealtimeTokenIssuer;
 }
