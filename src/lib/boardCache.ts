@@ -59,3 +59,12 @@ export function moveColumnInBoard(board: BoardDto, columnId: string, targetIndex
     ) ?? column.position;
   return replaceColumns(board, [...otherColumns, { ...column, position }]);
 }
+
+export function adjustTaskCommentCount(board: BoardDto, taskId: string, delta: number): BoardDto {
+  return {
+    ...board,
+    tasks: board.tasks.map((task) =>
+      task.id === taskId ? { ...task, commentCount: Math.max(0, task.commentCount + delta) } : task,
+    ),
+  };
+}

@@ -26,6 +26,7 @@ export function TaskDetailModal(props: TaskDetailModalProps) {
       <div className="grid gap-6 md:grid-cols-[1fr_15rem]">
         <TaskMainPanel
           task={task}
+          members={members}
           isSaving={updateTask.isPending}
           errorMessage={updateTask.error?.message}
           onUpdate={handleUpdate}
