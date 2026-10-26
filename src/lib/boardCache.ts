@@ -17,6 +17,15 @@ export function upsertTask(board: BoardDto, task: TaskDto): BoardDto {
   return { ...board, tasks };
 }
 
+// Realtime events can arrive out of order; never let an older snapshot overwrite newer state.
+export function upsertTaskIfNewer(board: BoardDto, task: TaskDto): BoardDto {
+  const cachedTask = board.tasks.find((existingTask) => existingTask.id === task.id);
+  if (cachedTask && new Date(cachedTask.updatedAt) > new Date(task.updatedAt)) {
+    return board;
+  }
+  return upsertTask(board, task);
+}
+
 export function removeTask(board: BoardDto, taskId: string): BoardDto {
   return { ...board, tasks: board.tasks.filter((task) => task.id !== taskId) };
 }
