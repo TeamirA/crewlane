@@ -1,10 +1,10 @@
 import type { Task } from "../../../domain/entities/task";
-import { ValidationError } from "../../../domain/errors/domainErrors";
 import type { AppDependencies } from "../../ports";
 import type { MoveTaskInput } from "../../schemas/taskSchemas";
 
 import { findTaskForMember } from "./findTaskForMember";
 import { placeTaskInColumn } from "./placeTaskInColumn";
+import { requireColumnInProject } from "./requireColumnInProject";
 
 type MoveTaskDependencies = Pick<
   AppDependencies,
@@ -18,10 +18,7 @@ export async function moveTask(
   { columnId, targetIndex }: MoveTaskInput,
 ): Promise<Task> {
   const existingTask = await findTaskForMember(dependencies, actorId, taskId);
-  const targetColumn = await dependencies.columns.findById(columnId);
-  if (!targetColumn || targetColumn.projectId !== existingTask.projectId) {
-    throw new ValidationError("Column does not belong to this project");
-  }
+  const targetColumn = await requireColumnInProject(dependencies, columnId, existingTask.projectId);
   const task = await placeTaskInColumn(dependencies.tasks, taskId, columnId, targetIndex);
   await dependencies.activity.record({
     projectId: task.projectId,

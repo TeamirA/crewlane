@@ -1,13 +1,21 @@
 import type { Comment } from "../../../domain/entities/comment";
 import type { AppDependencies } from "../../ports";
 import type { CommentBodyInput } from "../../schemas/commentSchemas";
+import { notifyCommentRecipients } from "../notifications/notifyCommentRecipients";
 import { findTaskForMember } from "../tasks/findTaskForMember";
 
 import { resolveMentionedMembers } from "./resolveMentionedMembers";
 
 export type AddCommentDependencies = Pick<
   AppDependencies,
-  "comments" | "tasks" | "members" | "projects" | "users" | "activity" | "realtime"
+  | "comments"
+  | "tasks"
+  | "members"
+  | "projects"
+  | "users"
+  | "activity"
+  | "realtime"
+  | "notifications"
 >;
 
 export async function addComment(
@@ -36,5 +44,6 @@ export async function addComment(
     actorId,
     payload: { comment, taskId },
   });
+  await notifyCommentRecipients(dependencies, task, comment, mentionedMembers);
   return comment;
 }

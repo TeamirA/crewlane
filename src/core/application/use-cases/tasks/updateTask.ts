@@ -2,12 +2,14 @@ import type { Task } from "../../../domain/entities/task";
 import type { AppDependencies } from "../../ports";
 import type { UpdateTaskInput } from "../../schemas/taskSchemas";
 
+import { notifyNewAssignees } from "../notifications/notifyNewAssignees";
+
 import { findTaskForMember } from "./findTaskForMember";
 import { validateTaskRelations } from "./validateTaskRelations";
 
 export type UpdateTaskDependencies = Pick<
   AppDependencies,
-  "tasks" | "members" | "projects" | "labels" | "activity" | "realtime"
+  "tasks" | "members" | "projects" | "labels" | "activity" | "realtime" | "notifications"
 >;
 
 export async function updateTask(
@@ -31,5 +33,7 @@ export async function updateTask(
     actorId,
     payload: { task },
   });
+  const previousAssigneeIds = existingTask.assignees.map((assignee) => assignee.id);
+  await notifyNewAssignees(dependencies, actorId, task, previousAssigneeIds);
   return task;
 }
