@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { Board } from "@/components/features/board/Board";
@@ -17,7 +18,7 @@ import { ProjectHeader } from "./ProjectHeader";
 export function ProjectWorkspace({ projectId }: { projectId: string }) {
   const projectQuery = useProjectDetails(projectId);
   const boardQuery = useBoard(projectId);
-  const [openTaskId, setOpenTaskId] = useState<string | null>(null);
+  const [openTaskId, setOpenTaskId] = useState<string | null>(useSearchParams().get("task"));
   const { filters, updateFilter, clearFilters } = useBoardFilters();
   useBoardRealtime(projectId);
   const error = projectQuery.error ?? boardQuery.error;

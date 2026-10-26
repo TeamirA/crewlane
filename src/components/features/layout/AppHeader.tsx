@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { APP_NAME, ROUTES } from "@/lib/constants";
 
+import { NotificationBell } from "../notification/NotificationBell";
+
 import { UserMenu } from "./UserMenu";
 
 export function AppHeader() {
@@ -23,6 +25,7 @@ export function AppHeader() {
           </Link>
         </nav>
         <div className="ml-auto flex items-center gap-2">
+          <NotificationBell />
           <UserMenu />
         </div>
       </div>
