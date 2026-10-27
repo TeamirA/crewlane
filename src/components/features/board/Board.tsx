@@ -25,7 +25,7 @@ export function Board(props: BoardProps) {
   const canDeleteColumn = currentUserRole !== "MEMBER" && board.columns.length > 1;
   return (
     <DndContext sensors={sensors} collisionDetection={closestCorners} {...handlers}>
-      <div className="flex flex-1 items-start gap-4 overflow-x-auto pb-4">
+      <div className="-mx-4 flex flex-1 snap-x snap-mandatory scroll-px-4 items-start gap-4 overflow-x-auto px-4 pb-4 sm:snap-none">
         {board.columns.map((column, columnIndex) => (
           <BoardColumn
             key={column.id}

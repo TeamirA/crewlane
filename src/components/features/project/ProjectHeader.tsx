@@ -14,7 +14,7 @@ export function ProjectHeader({ details }: { details: ProjectDetailsDto }) {
   const { project, members, currentUserRole } = details;
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 basis-full sm:flex-1 sm:basis-auto">
         <h1 className="truncate text-xl font-semibold">{project.name}</h1>
         {project.description && (
           <p className="truncate text-sm text-neutral-500">{project.description}</p>

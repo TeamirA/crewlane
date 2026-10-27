@@ -19,7 +19,7 @@ export function AddColumnForm({ projectId }: { projectId: string }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-72 shrink-0 flex-col gap-2 self-start rounded-xl border border-dashed bg-white/60 p-3"
+      className="flex w-[82vw] max-w-72 shrink-0 snap-start flex-col gap-2 self-start rounded-xl border border-dashed bg-white/60 p-3 sm:w-72"
     >
       <Input
         label="New column name"

@@ -26,7 +26,7 @@ export function BoardColumn(props: BoardColumnProps) {
   return (
     <section
       aria-label={`${column.name} column`}
-      className="flex max-h-full w-72 shrink-0 flex-col gap-3 rounded-xl bg-neutral-100 p-3"
+      className="flex max-h-full w-[82vw] max-w-72 shrink-0 snap-start flex-col gap-3 rounded-xl bg-neutral-100 p-3 sm:w-72"
     >
       <ColumnHeader
         column={column}

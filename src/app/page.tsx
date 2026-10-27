@@ -10,12 +10,12 @@ export default function HomePage() {
       <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">
         Real-time Kanban for teams
       </span>
-      <h1 className="text-5xl font-bold tracking-tight">{APP_NAME}</h1>
+      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{APP_NAME}</h1>
       <p className="max-w-md text-lg text-neutral-600">
         Plan, assign, and ship work together on shared boards that update the moment a teammate
         moves a card.
       </p>
-      <div className="flex gap-3">
+      <div className="flex flex-wrap justify-center gap-3">
         <Link
           href={ROUTES.register}
           className={`${linkBaseClasses} bg-indigo-600 text-white hover:bg-indigo-500`}
