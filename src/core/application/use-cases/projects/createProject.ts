@@ -1,5 +1,4 @@
-import { DEFAULT_COLUMN_NAMES } from "@/lib/constants";
-
+import { DEFAULT_COLUMN_NAMES } from "../../../domain/entities/column";
 import type { Project } from "../../../domain/entities/project";
 import type { AppDependencies } from "../../ports";
 import type { CreateProjectInput } from "../../schemas/projectSchemas";

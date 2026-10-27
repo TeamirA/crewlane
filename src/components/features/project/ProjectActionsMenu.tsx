@@ -38,9 +38,11 @@ export function ProjectActionsMenu({ project }: { project: ProjectDto }) {
       <Modal isOpen={openDialog === "rename"} onClose={closeDialog} title="Edit project">
         <RenameProjectForm project={project} onDone={closeDialog} />
       </Modal>
-      <Modal isOpen={openDialog === "delete"} onClose={closeDialog} title="Delete project?">
-        <DeleteProjectConfirmation project={project} onCancel={closeDialog} />
-      </Modal>
+      <DeleteProjectConfirmation
+        project={project}
+        isOpen={openDialog === "delete"}
+        onCancel={closeDialog}
+      />
     </>
   );
 }
