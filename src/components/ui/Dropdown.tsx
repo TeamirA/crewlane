@@ -24,6 +24,7 @@ export function Dropdown(props: DropdownProps) {
 
   useEffect(() => {
     if (!isOpen) return;
+    containerRef.current?.querySelector<HTMLElement>("[data-dropdown-item]")?.focus();
     function handlePointerDown(event: PointerEvent) {
       if (!containerRef.current?.contains(event.target as Node)) setIsOpen(false);
     }

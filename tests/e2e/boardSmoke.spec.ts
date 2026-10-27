@@ -42,13 +42,13 @@ test("a new user can plan work on a board and the order survives a reload", asyn
   await todoColumn.getByRole("button", { name: "Add", exact: true }).click();
   await expect(todoColumn.getByText("Ship the smoke test")).toBeVisible();
 
-  await todoColumn.getByRole("button", { name: "Ship the smoke test" }).click();
+  await todoColumn.getByRole("button", { name: "Ship the smoke test", exact: true }).click();
   await page.getByPlaceholder(/Write a comment/).fill("Looks good to me");
   await page.getByRole("button", { name: "Comment", exact: true }).click();
   await expect(page.getByText("Looks good to me")).toBeVisible();
   await page.getByRole("button", { name: "Close dialog" }).click();
 
-  const card = todoColumn.getByRole("button", { name: /Ship the smoke test/ }).first();
+  const card = todoColumn.getByRole("button", { name: "Move task Ship the smoke test" });
   const inProgressColumn = page.getByRole("region", { name: "In Progress column" });
   await dragByMouse(page, card, inProgressColumn.getByRole("list"));
   await expect(inProgressColumn.getByText("Ship the smoke test")).toBeVisible();
