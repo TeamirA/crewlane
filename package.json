@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
@@ -20,7 +20,8 @@
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
     "db:realtime-policies": "prisma db execute --file prisma/supabase/realtime-authorization.sql --schema prisma/schema.prisma",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -75,5 +76,8 @@
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
+  },
+  "engines": {
+    "node": ">=20.9"
   }
 }
