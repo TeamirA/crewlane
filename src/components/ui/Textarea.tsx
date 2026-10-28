@@ -1,10 +1,10 @@
-import { type TextareaHTMLAttributes, useId } from "react";
+import { type ComponentProps, useId } from "react";
 
 import { cn } from "@/lib/cn";
 
 import { fieldControlClasses, FormField, getFieldDescriptionId } from "./FormField";
 
-interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface TextareaProps extends ComponentProps<"textarea"> {
   label: string;
   error?: string;
   hint?: string;

@@ -28,6 +28,7 @@ export function MentionSuggestions({ query, members, onSelect }: MentionSuggesti
         <li key={member.id}>
           <button
             type="button"
+            onMouseDown={(event) => event.preventDefault()}
             onClick={() => onSelect(member.username)}
             className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm hover:bg-neutral-100"
           >
