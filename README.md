@@ -4,12 +4,35 @@ Collaborative Kanban project management for small teams. Create shared projects,
 on drag-and-drop boards, assign tasks to teammates, discuss them with @mentions, and see every
 change from your crew the moment it happens.
 
+**Live demo:** https://crewlane-app.vercel.app
+
+| Demo account         | Password        |
+| -------------------- | --------------- |
+| `amara@crewlane.dev` | `Crewlane#2026` |
+| `dawit@crewlane.dev` | `Crewlane#2026` |
+| `lena@crewlane.dev`  | `Crewlane#2026` |
+
+Log in as two different users in two browsers (or a private window) to watch changes arrive
+live.
+
+![Project board](docs/screenshots/board.png)
+
+## Screenshots
+
+| Task detail                                      | Projects                                   |
+| ------------------------------------------------ | ------------------------------------------ |
+| ![Task detail](docs/screenshots/task-detail.png) | ![Projects](docs/screenshots/projects.png) |
+
+| Landing                                  | Mobile board                                                                   |
+| ---------------------------------------- | ------------------------------------------------------------------------------ |
+| ![Landing](docs/screenshots/landing.png) | <img src="docs/screenshots/mobile-board.png" width="260" alt="Mobile board" /> |
+
 ## Features
 
 - **Accounts** – register, log in, log out. Short-lived access tokens with rotating refresh
   tokens in httpOnly cookies; refresh-token reuse revokes the whole session family.
-- **Projects & members** – create, rename and delete projects; invite teammates by email or username with
-  `OWNER`, `ADMIN` or `MEMBER` roles; change roles or remove members.
+- **Projects & members** – create, rename and delete projects; invite teammates by email or
+  username as `ADMIN` or `MEMBER` (the creator is `OWNER`); change roles or remove members.
 - **Boards** – default To Do / In Progress / Done columns; add, rename, reorder and delete
   columns; drag tasks within and across columns (mouse, touch and keyboard).
 - **Tasks** – title, description, priority, due date, assignees and labels; search and filter
